@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+# fail fast
+set -e
+
+# debug
+# set -x
+
+# clean up leaking environment
+unset GIT_DIR
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
+
+mkdir -p "$BUILD_DIR/bin"
+
+echo "-----> postgresql-uri-fix-buildpack: Moving the script into app/bin"
+cp "$BUILDPACK_DIR/bin/update-postgresql-uri.sh" "$BUILD_DIR/bin"
+chmod +x "$BUILD_DIR/bin/update-postgresql-uri.sh"
+
+echo "-----> postgresql-uri-fix-buildpack: done"
